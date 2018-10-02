@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".activities.LoginActivity">
+
+    <TextView
+        android:id="@+id/tvNomAgence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nom_agence"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        />
+
+    <TextView
+        android:id="@+id/tvLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomAgence"
+        android:text="@string/login"
+        android:textSize="30sp"
+        android:layout_marginTop="40dp"
+        />
+
+    <EditText
+        android:id="@+id/etLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLogin"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:id="@+id/tvMotDePasse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etLogin"
+        android:text="@string/mot_de_passe"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etMotDePasse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMotDePasse"
+        android:inputType="textPassword"
+        android:layout_marginTop="10dp"
+        />
+
+    <Button
+        android:id="@+id/btnValider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etMotDePasse"
+        android:text="@string/valider"
+        android:textSize="30sp"
+        android:layout_marginTop="40dp"
+        android:onClick="verificationUtilisateur"
+        />
+
+</RelativeLayout>

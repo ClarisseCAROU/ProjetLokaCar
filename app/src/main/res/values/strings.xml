@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ProjetLokaCar</string>
+    <string name="nom_agence">Agence X</string>
+    <string name="login">Login :</string>
+    <string name="mot_de_passe">Mot de passe :</string>
+    <string name="valider">Valider</string>
     <string name="btn_nouvelle_location">Nouvelle location</string>
     <string name="btn_retour_location">Retour location</string>
     <string name="btn_gestion_vehicules">Gestion véhicules</string>
