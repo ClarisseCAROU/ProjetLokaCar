@@ -1,15 +1,85 @@
 package fr.eni.projetlokacar.activities.clients;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.SearchManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import java.util.List;
 
 import fr.eni.projetlokacar.R;
+import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
+import fr.eni.projetlokacar.adapters.ClientAdapter;
+import fr.eni.projetlokacar.bll.ClientManager;
+import fr.eni.projetlokacar.bo.Client;
 
-public class GestionClientsActivity extends AppCompatActivity {
+public class GestionClientsActivity extends AppCompatActivity implements ClientAdapter.ClickClientListener {
+
+    RecyclerView rvClients;
+    ClientAdapter clientAdapter;
+    ClientReceiver clientReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_clients);
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+//            rechercherNomClient(query);
+        }
+
+        rvClients = this.findViewById(R.id.rvListeClients);
+        rvClients.setHasFixedSize(true);
+
+        clientAdapter = new ClientAdapter(this);
+        rvClients.setAdapter(clientAdapter);
+
+        this.clientReceiver = new ClientReceiver();
+        this.registerReceiver(this.clientReceiver, new IntentFilter("fr.eni.select.clients"));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ClientManager clientManager = new ClientManager(this);
+        clientManager.selectAll();
+    }
+
+    @Override
+    public void onClickClient(Client client) {
+        Toast.makeText(this, client.toString(), Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, NouvelleLocationActivity.class);
+        intent.putExtra("clientSelectionne", client);
+        startActivity(intent);
+    }
+
+    public void creerClient(View view) {
+        Intent intent = new Intent(this, NouveauClientActivity.class);
+        startActivity(intent);
+    }
+
+    //ClientReceiver appelé quand la liste des clients est prête
+    private class ClientReceiver extends BroadcastReceiver {
+
+        private static final String TAG = "CLIENT RECEIVER_CLIENT";
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i(TAG, "onReceive");
+            List<Client> clients = intent.getParcelableArrayListExtra("clients");
+            clientAdapter.addListeClients(clients);
+            clientAdapter.notifyDataSetChanged();
+        }
     }
 }

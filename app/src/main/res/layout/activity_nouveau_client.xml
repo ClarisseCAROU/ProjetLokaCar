@@ -1,9 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".activities.clients.NouveauClientActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvPrenomClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prenom_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etPrenomClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvPrenomClient"
+        android:layout_alignBaseline="@id/tvPrenomClient"
+        />
+
+    <TextView
+        android:id="@+id/tvNomClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPrenomClient"
+        android:text="@string/nom_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etNomClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvNomClient"
+        android:layout_alignBaseline="@id/tvNomClient"
+        />
+
+    <TextView
+        android:id="@+id/tvAdresseClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNomClient"
+        android:text="@string/adresse_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etAdresseClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvAdresseClient"
+        android:layout_alignBaseline="@id/tvAdresseClient"
+        />
+
+    <TextView
+        android:id="@+id/tvVilleClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAdresseClient"
+        android:text="@string/ville_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etVilleClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvVilleClient"
+        android:layout_alignBaseline="@id/tvVilleClient"
+        />
+
+    <TextView
+        android:id="@+id/tvCpClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvVilleClient"
+        android:text="@string/cp_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etCpClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:layout_toEndOf="@id/tvCpClient"
+        android:layout_alignBaseline="@id/tvCpClient"
+        />
+
+    <TextView
+        android:id="@+id/tvTelephoneClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCpClient"
+        android:text="@string/telephone_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etTelephoneClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:layout_toEndOf="@id/tvTelephoneClient"
+        android:layout_alignBaseline="@id/tvTelephoneClient"
+        />
+
+    <TextView
+        android:id="@+id/tvEmailClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTelephoneClient"
+        android:text="@string/email_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etEmailClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:layout_toEndOf="@id/tvEmailClient"
+        android:layout_alignBaseline="@id/tvEmailClient"
+        />
+
+    <TextView
+        android:id="@+id/tvNumPermisClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvEmailClient"
+        android:text="@string/num_permis_client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etNumPermisClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvNumPermisClient"
+        android:layout_alignBaseline="@id/tvNumPermisClient"
+        />
+
+    <Button
+        android:id="@+id/btnValider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvNumPermisClient"
+        android:text="@string/valider"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:onClick="ajouterClient"
+        />
+</RelativeLayout>
