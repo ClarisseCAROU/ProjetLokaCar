@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AccueilActivity"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center_vertical"
+    >
+
+    <Button
+        android:id="@+id/btn_nouvelle_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_nouvelle_location"
+        android:onClick="onClickMenu"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/btn_retour_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_retour_location"
+        android:onClick="onClickMenu"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/btn_gestion_vehicules"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_gestion_vehicules"
+        android:onClick="onClickMenu"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/btn_gestion_clients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_gestion_clients"
+        android:onClick="onClickMenu"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
+
+    <Button
+        android:id="@+id/btn_statistiques"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_statistiques"
+        android:onClick="onClickMenu"
+        android:layout_margin="10dp"
+        android:padding="20dp"/>
+
+</LinearLayout>
