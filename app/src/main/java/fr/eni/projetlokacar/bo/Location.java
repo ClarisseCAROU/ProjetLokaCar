@@ -1,9 +1,13 @@
 package fr.eni.projetlokacar.bo;
 
+import android.arch.persistence.room.Entity;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity(tableName = "locations")
 public class Location {
+
     private LocalDateTime dateDepart;
     private LocalDateTime dateRetour;
     private LocalDateTime dateCloture;

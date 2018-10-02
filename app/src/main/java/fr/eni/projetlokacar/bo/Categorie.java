@@ -1,6 +1,12 @@
 package fr.eni.projetlokacar.bo;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "categories")
 public class Categorie {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String libelle;
 

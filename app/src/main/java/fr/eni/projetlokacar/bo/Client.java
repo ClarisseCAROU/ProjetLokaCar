@@ -1,7 +1,14 @@
 package fr.eni.projetlokacar.bo;
 
-public class Client {
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+@Entity(tableName = "clients")
+public class Client implements Parcelable {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String nom;
     private String prenom;
@@ -40,6 +47,48 @@ public class Client {
         this.email = email;
     }
 
+
+    protected Client(Parcel in) {
+        id = in.readInt();
+        nom = in.readString();
+        prenom = in.readString();
+        numPermis = in.readInt();
+        adresse = in.readString();
+        codePostal = in.readString();
+        ville = in.readString();
+        telephone = in.readString();
+        email = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(nom);
+        dest.writeString(prenom);
+        dest.writeInt(numPermis);
+        dest.writeString(adresse);
+        dest.writeString(codePostal);
+        dest.writeString(ville);
+        dest.writeString(telephone);
+        dest.writeString(email);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Client> CREATOR = new Creator<Client>() {
+        @Override
+        public Client createFromParcel(Parcel in) {
+            return new Client(in);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
 
     public int getId() {
         return id;

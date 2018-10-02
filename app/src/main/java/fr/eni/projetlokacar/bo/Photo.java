@@ -1,6 +1,10 @@
 package fr.eni.projetlokacar.bo;
 
+import android.arch.persistence.room.PrimaryKey;
+
 public abstract class Photo {
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String url;
 

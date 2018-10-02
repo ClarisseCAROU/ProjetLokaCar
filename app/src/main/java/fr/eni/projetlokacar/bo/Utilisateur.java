@@ -1,6 +1,12 @@
 package fr.eni.projetlokacar.bo;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "utilisateurs")
 public class Utilisateur {
+
+    @PrimaryKey
     private String login;
     private String MotDePasse;
 
