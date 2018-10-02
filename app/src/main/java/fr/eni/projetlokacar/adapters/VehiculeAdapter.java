@@ -42,7 +42,7 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Vehicule vehicule = vehicules.get(position);
-        holder.tvVehicule.setText(vehicule.getModele() + " (" + vehicule.getImmatriculation() + ")");
+        holder.tvVehicule.setText(vehicule.getMarque() + " " + vehicule.getModele() + " (" + vehicule.getImmatriculation() + ")");
 
     }
 

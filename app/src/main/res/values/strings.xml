@@ -19,6 +19,9 @@
     <string name="num_permis_client">N° permis :</string>
     <string name="search_hint">Veuillez insérez le nom d\'un client</string>
     <string name="status">Statut :</string>
+    <string name="filter_vehicules">Filtrer les véhicules</string>
+    <string name="tous">Tous</string>
+    <string name="recherche">Recherche...</string>
     <string-array name="status">
         <item>Tous</item>
         <item>Disponibles</item>

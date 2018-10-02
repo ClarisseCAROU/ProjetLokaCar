@@ -8,6 +8,8 @@ import com.idescout.sql.SqlScoutServer;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    public static final String TAG = "LokaCarApp";
+
     private SqlScoutServer sqlScoutServer;
 
     @Override

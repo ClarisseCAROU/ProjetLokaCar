@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.vehicules.ListeVehiculesActivity"
-    android:padding="20dp">
+    android:padding="15dp">
 
     <LinearLayout
         android:id="@+id/filtres_vehicules"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginEnd="20dp">
+        android:orientation="horizontal"
+        android:layout_marginEnd="15dp">
 
-        <TextView
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/status"
@@ -25,12 +26,45 @@
             android:id="@+id/sp_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </Spinner>
+        </Spinner>-->
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btn_filtre_vehicules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:onClick="onFiltresClick"
+            app:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_filter_list_black_24dp"
+            app:layout_anchor="@id/rv_vehicules"
+            app:layout_anchorGravity="bottom|right|end"
+            android:focusable="true"
+            app:fabSize="mini"
+            />
+        <TextView
+            android:id="@+id/tv_filtre_vehicules"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tous"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:labelFor="@+id/btn_filtre_vehicules"
+            android:layout_gravity="center_vertical"/>
+
+        <EditText
+            android:id="@+id/recherche_vehicule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:hint="@string/recherche"
+            android:layout_gravity="right"
+            android:focusedByDefault="false"
+            />
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/rv_vehicules"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
