@@ -9,10 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity">
-
-        </activity>
-        <activity android:name=".activities.AccueilActivity" >
+        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.AccueilActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +23,8 @@
         <activity android:name=".activities.clients.GestionClientsActivity" />
         <activity android:name=".activities.clients.NouveauClientActivity" />
         <activity android:name=".activities.vehicules.NouveauVehiculeActivity" />
-        <activity android:name=".activities.StatistiquesActivity"></activity>
+        <activity android:name=".activities.StatistiquesActivity" />
+        <activity android:name=".activities.vehicules.ListeVehiculesActivity"></activity>
     </application>
 
 </manifest>

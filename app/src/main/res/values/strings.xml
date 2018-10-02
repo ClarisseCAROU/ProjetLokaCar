@@ -9,4 +9,14 @@
     <string name="btn_gestion_vehicules">Gestion véhicules</string>
     <string name="btn_gestion_clients">Gestion clients</string>
     <string name="btn_statistiques">Statistiques</string>
+    <string-array name="status">
+        <item>Tous</item>
+        <item>Disponibles</item>
+        <item>Loués</item>
+    </string-array>
+    <string-array name="categorie_vehicule">
+        <item>Tous</item>
+        <item>Disponibles</item>
+        <item>Loués</item>
+    </string-array>
 </resources>

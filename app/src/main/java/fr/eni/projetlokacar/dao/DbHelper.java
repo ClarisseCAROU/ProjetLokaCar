@@ -5,9 +5,18 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
+
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 
 import fr.eni.projetlokacar.activities.AccueilActivity;
+import fr.eni.projetlokacar.bo.Categorie;
 import fr.eni.projetlokacar.bo.Client;
+import fr.eni.projetlokacar.bo.Vehicule;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class DbHelper {
 
@@ -27,7 +36,7 @@ public abstract class DbHelper {
 
     private static void insertData(Context context) {
 
-        final Client[] clients = {
+        Client[] clients = {
                 new Client("Ladbrooke", "Berti", 225098417, "00 Hollow Ridge Plaza", "32154", "Kroya", "2433704333", "bladbrooke0@slate.com"),
                 new Client("Dalley", "Gilli", 1449591337, "53066 Washington Place", "46406", "Gary", "2193286898", "gdalley1@smugmug.com"),
                 new Client("Mordacai", "Debby", 236963684, "207 Northfield Circle", "60224", "Norrköping", "9471564650", "dmordacai2@ebay.co.uk"),
@@ -39,7 +48,41 @@ public abstract class DbHelper {
                 new Client("Dobbins", "Griffin", 604075751, "0005 American Trail", "69871", "Egindiköl", "4115112141", "gdobbins8@altervista.org")
         };
 
-        DbHelper.getDataBase(context).getClientDao().insertAll(clients);
+        Categorie[] categories = {
+                new Categorie("Citadine"),
+                new Categorie("Routière"),
+                new Categorie("Berline"),
+                new Categorie("Utilitaire"),
+                new Categorie("Monospace")
+        };
+
+        Vehicule[] vehicules = {
+                new Vehicule("DP-391-GH", "Yellow", 126.6, "300SL", "Mercedes-Benz", 2),
+                new Vehicule("FB-635-KE", "Blue", 79.24, "X6 M", "BMW", 2),
+                new Vehicule("DG-596-AW", "Purple", 82.54, "Cayenne", "Porsche", 2),
+                new Vehicule("YH-563-HK", "Turquoise", 79.41, "Ram 3500", "Dodge", 4),
+                new Vehicule("UW-355-ID", "Mauv", 80.56, "Savana 1500", "GMC", 3),
+                new Vehicule("CD-975-CF", "Blue", 65.54, "Sebring", "Chrysler", 2),
+                new Vehicule("TS-981-UC", "Blue", 82.55, "Cayman", "Porsche", 3),
+                new Vehicule("DN-218-OH", "Violet", 20.26, "CLK-Class", "Mercedes-Benz", 3),
+                new Vehicule("YS-726-ON", "Red", 30.26, "S-Class", "Mercedes-Benz", 1),
+                new Vehicule("AX-569-WO", "Indigo", 50.52, "Sunfire", "Pontiac", 1),
+                new Vehicule("JJ-264-PF", "Aquamarine", 34.47, "Montero", "Mitsubishi", 4),
+                new Vehicule("NE-177-WI", "Pink", 136.11, "LS", "Lexus", 2),
+                new Vehicule("QC-852-WR", "Indigo", 41.31, "Bonneville", "Pontiac", 3),
+                new Vehicule("AG-436-ZK", "Khaki", 68.3, "Odyssey", "Honda", 4),
+                new Vehicule("EO-943-TR", "Turquoise", 75.95, "Grand Am", "Pontiac", 4),
+                new Vehicule("ZU-420-UB", "Orange", 128.29, "Century", "Buick", 1),
+                new Vehicule("SU-389-CN", "Crimson", 43.68, "Ram 2500 Club", "Dodge", 2),
+                new Vehicule("JV-291-ZH", "Puce", 42.22, "Tahoe", "Chevrolet", 1),
+                new Vehicule("AE-728-WI", "Red", 110.49, "E150", "Ford", 2),
+                new Vehicule("NZ-972-TV", "Pink", 91.32, "Bonneville", "Pontiac", 1)
+        };
+
+        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getClientDao().insertAll(clients));
+        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getCategorieDAO().insertAll(categories));
+        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getVehiculeDAO().insertAll(vehicules));
+
 
     }
 

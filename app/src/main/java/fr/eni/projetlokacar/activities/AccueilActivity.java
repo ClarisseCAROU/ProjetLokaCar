@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.clients.GestionClientsActivity;
+import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.activities.location.RetourLocationActivity;
 import fr.eni.projetlokacar.activities.vehicules.GestionVehiculesActivity;
 import fr.eni.projetlokacar.bo.Client;
@@ -46,7 +47,7 @@ public class AccueilActivity extends AppCompatActivity {
         switch (view.getId()){
 
             case R.id.btn_nouvelle_location :
-                //intent = new Intent(this, NouvelleLocationActivity.class);
+                intent = new Intent(this, NouvelleLocationActivity.class);
                 break;
 
             case R.id.btn_retour_location :

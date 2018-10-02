@@ -3,21 +3,16 @@ package fr.eni.projetlokacar.bo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
+import android.arch.persistence.room.TypeConverters;
 
 import java.util.List;
 
-@Entity(tableName = "vehicules",
-        foreignKeys = {
-                @ForeignKey(entity = Modele.class,
-                            parentColumns = "id",
-                            childColumns = "modeleId"),
-                @ForeignKey(entity = Categorie.class,
-                            parentColumns = "id",
-                            childColumns = "categorieId")
-        }
-)
+import fr.eni.projetlokacar.dao.converters.CategorieConverter;
+
+@Entity(tableName = "vehicules", indices = {@Index("immatriculation")})
 public class Vehicule {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,30 +22,29 @@ public class Vehicule {
     private double tarifJournalier;
     private String modele;
     private String marque;
-    private int categorieId;
-
-    @Ignore
+    @TypeConverters(CategorieConverter.class)
     private Categorie categorie;
-    @Relation(entity = PhotoVehicule.class, parentColumn = "id", entityColumn = "vehiculeId")
-    private List<PhotoVehicule> photoVehicules;
 
     public Vehicule() {
     }
 
-    public Vehicule(String immatriculation, String couleur, double tarifJournalier, String modele, Categorie categorie, List<PhotoVehicule> photoVehicules) {
+    public Vehicule(String immatriculation, String couleur, double tarifJournalier, String modele, String marque, Categorie categorie) {
         this.immatriculation = immatriculation;
         this.couleur = couleur;
         this.tarifJournalier = tarifJournalier;
         this.modele = modele;
+        this.marque = marque;
         this.categorie = categorie;
-        this.photoVehicules = photoVehicules;
     }
 
-    public Vehicule(int id, String immatriculation, String couleur, double tarifJournalier, String modele, Categorie categorie, List<PhotoVehicule> photoVehicules) {
-        this(immatriculation, couleur, tarifJournalier, modele, categorie, photoVehicules);
-        this.id = id;
+    public Vehicule(String immatriculation, String couleur, double tarifJournalier, String modele, String marque, int categorie) {
+        this.immatriculation = immatriculation;
+        this.couleur = couleur;
+        this.tarifJournalier = tarifJournalier;
+        this.modele = modele;
+        this.marque = marque;
+        this.categorie = CategorieConverter.toCategorie(categorie);
     }
-
 
     public int getId() {
         return id;
@@ -76,6 +70,22 @@ public class Vehicule {
         this.couleur = couleur;
     }
 
+    public String getModele() {
+        return modele;
+    }
+
+    public void setModele(String modele) {
+        this.modele = modele;
+    }
+
+    public String getMarque() {
+        return marque;
+    }
+
+    public void setMarque(String marque) {
+        this.marque = marque;
+    }
+
     public double getTarifJournalier() {
         return tarifJournalier;
     }
@@ -92,22 +102,6 @@ public class Vehicule {
         this.categorie = categorie;
     }
 
-    public List<PhotoVehicule> getPhotoVehicules() {
-        return photoVehicules;
-    }
-
-    public void setPhotoVehicules(List<PhotoVehicule> photoVehicules) {
-        this.photoVehicules = photoVehicules;
-    }
-
-    public int getCategorieId() {
-        return categorieId;
-    }
-
-    public void setCategorieId(int categorieId) {
-        this.categorieId = categorieId;
-    }
-
     @Override
     public String toString() {
         return "Vehicule{" +
@@ -117,8 +111,25 @@ public class Vehicule {
                 ", tarifJournalier=" + tarifJournalier +
                 ", modele=" + modele +
                 ", categorie=" + categorie +
-                ", photoVehicules=" + photoVehicules +
                 "}\n";
+    }
+
+    public enum Categorie{
+
+        Berline(1),
+        Citadine(2),
+        Monospace(3),
+        Utilitaire(4);
+
+        private int id;
+
+        Categorie(int id) {
+            this.id = id;
+        }
+
+        public int getId(){
+            return id;
+        }
     }
 }
 

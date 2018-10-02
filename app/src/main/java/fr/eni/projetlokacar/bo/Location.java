@@ -12,21 +12,10 @@ public class Location {
     private LocalDateTime dateRetour;
     private LocalDateTime dateCloture;
     private String commentaire;
-    private Vehicule vehicule;
-    private Client client;
-    private List<PhotoEtatDesLieux> photoEtatDesLieux;
+    private int clientId;
+    private int vehiculeId;
 
     public Location() {
-    }
-
-    public Location(LocalDateTime dateDepart, LocalDateTime dateRetour, LocalDateTime dateCloture, String commentaire, Vehicule vehicule, Client client, List<PhotoEtatDesLieux> photoEtatDesLieux) {
-        this.dateDepart = dateDepart;
-        this.dateRetour = dateRetour;
-        this.dateCloture = dateCloture;
-        this.commentaire = commentaire;
-        this.vehicule = vehicule;
-        this.client = client;
-        this.photoEtatDesLieux = photoEtatDesLieux;
     }
 
     public LocalDateTime getDateDepart() {
@@ -61,30 +50,6 @@ public class Location {
         this.commentaire = commentaire;
     }
 
-    public Vehicule getVehicule() {
-        return vehicule;
-    }
-
-    public void setVehicule(Vehicule vehicule) {
-        this.vehicule = vehicule;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public List<PhotoEtatDesLieux> getPhotoEtatDesLieux() {
-        return photoEtatDesLieux;
-    }
-
-    public void setPhotoEtatDesLieux(List<PhotoEtatDesLieux> photoEtatDesLieux) {
-        this.photoEtatDesLieux = photoEtatDesLieux;
-    }
-
     @Override
     public String toString() {
         return "Location{" +
@@ -92,9 +57,6 @@ public class Location {
                 ", dateRetour=" + dateRetour +
                 ", dateCloture=" + dateCloture +
                 ", commentaire='" + commentaire + '\'' +
-                ", vehicule=" + vehicule +
-                ", client=" + client +
-                ", photoEtatDesLieux=" + photoEtatDesLieux +
                 '}';
     }
 }

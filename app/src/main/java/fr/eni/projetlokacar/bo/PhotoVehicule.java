@@ -1,5 +1,8 @@
 package fr.eni.projetlokacar.bo;
 
+import android.arch.persistence.room.Entity;
+
+@Entity(tableName = "photosVehicule")
 public class PhotoVehicule extends Photo{
 
     public PhotoVehicule() {
@@ -17,8 +20,6 @@ public class PhotoVehicule extends Photo{
     public String toString() {
         return "PhotoVehicule{}";
     }
-
-
 
 }
 
