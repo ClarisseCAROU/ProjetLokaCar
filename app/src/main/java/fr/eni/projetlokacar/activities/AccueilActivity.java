@@ -19,16 +19,14 @@ import fr.eni.projetlokacar.activities.vehicules.GestionVehiculesActivity;
 import fr.eni.projetlokacar.bo.Client;
 import fr.eni.projetlokacar.dao.DbHelper;
 
-public class AccueilActivity extends AppCompatActivity {
+public class AccueilActivity extends BaseActivity {
 
-    private SqlScoutServer sqlScoutServer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
-
-        sqlScoutServer = SqlScoutServer.create(this, getPackageName());
 
         Executors.newSingleThreadExecutor().execute(new Runnable() {
             @Override
@@ -71,9 +69,4 @@ public class AccueilActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        sqlScoutServer.destroy();
-    }
 }

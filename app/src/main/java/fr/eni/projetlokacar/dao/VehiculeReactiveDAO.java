@@ -9,15 +9,9 @@ import fr.eni.projetlokacar.bo.Vehicule;
 import io.reactivex.Single;
 
 @Dao
-public interface VehiculeDAO extends BaseDAO<Vehicule>{
+public interface VehiculeReactiveDAO {
 
     @Query("SELECT * FROM VEHICULES")
-    List<Vehicule> selectAll();
-
-    @Query("SELECT * FROM VEHICULES WHERE immatriculation=:immatriculation")
-    List<Vehicule> selectByImmatriculation(String immatriculation);
-
-
-
+    Single<List<Vehicule>> selectAll();
 
 }

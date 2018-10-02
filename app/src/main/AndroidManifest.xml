@@ -9,45 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.AccueilActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activities.AccueilActivity" />
         <activity android:name=".activities.location.NouvelleLocationActivity" />
         <activity android:name=".activities.location.RetourLocationActivity" />
         <activity android:name=".activities.vehicules.GestionVehiculesActivity" />
-        <activity android:name=".activities.clients.GestionClientsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-        <activity android:name=".activities.clients.NouveauClientActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity android:name=".activities.clients.GestionClientsActivity" />
+        <activity android:name=".activities.clients.NouveauClientActivity" />
         <activity android:name=".activities.vehicules.NouveauVehiculeActivity" />
         <activity android:name=".activities.StatistiquesActivity" />
+        <activity android:name=".activities.vehicules.ListeVehiculesActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <service
-            android:name=".dao.services.ClientIntentService"
-            android:exported="false"></service>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
