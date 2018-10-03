@@ -23,22 +23,14 @@ import fr.eni.projetlokacar.activities.BaseActivity;
 
 public class GestionClientsActivity extends BaseActivity implements ClientAdapter.ClickClientListener {
 
-    RecyclerView rvClients;
-    ClientAdapter clientAdapter;
-    ClientReceiver clientReceiver;
-
+    private RecyclerView rvClients;
+    private ClientAdapter clientAdapter;
+    private ClientReceiver clientReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_clients);
-
-        // Get the intent, verify the action and get the query
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-//            rechercherNomClient(query);
-        }
 
         rvClients = this.findViewById(R.id.rvListeClients);
         rvClients.setHasFixedSize(true);

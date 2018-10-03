@@ -88,7 +88,7 @@ public class ListeVehiculesActivity extends BaseActivity implements SearchView.O
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.d(TAG, "onQueryTextSubmit: " + query);
+        //Log.d(TAG, "onQueryTextSubmit: " + query);
 
         return false;
     }
