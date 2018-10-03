@@ -162,7 +162,7 @@
         android:id="@+id/etNumPermisClient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="number"
         android:layout_toEndOf="@id/tvNumPermisClient"
         android:layout_alignBaseline="@id/tvNumPermisClient"
         />
