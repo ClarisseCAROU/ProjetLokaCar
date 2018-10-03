@@ -22,6 +22,7 @@
     <string name="filter_vehicules">Filtrer les véhicules</string>
     <string name="tous">Tous</string>
     <string name="recherche">Recherche...</string>
+    <string name="choix_date_depart">Date de début :</string>
     <string-array name="status">
         <item>Tous</item>
         <item>Disponibles</item>

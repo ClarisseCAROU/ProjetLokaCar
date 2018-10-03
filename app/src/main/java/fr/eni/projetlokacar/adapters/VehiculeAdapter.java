@@ -1,7 +1,6 @@
 package fr.eni.projetlokacar.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import fr.eni.projetlokacar.bo.Vehicule;
 
 public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHolder> {
 
-    List<Vehicule> vehicules;
-    ItemClickListener listener;
+    private List<Vehicule> vehicules;
+    private ItemClickListener listener;
 
     public VehiculeAdapter(ItemClickListener listener) {
         this.vehicules = new ArrayList<>();
@@ -24,25 +23,29 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
     }
 
     public void addVehicules(List<Vehicule> vehicules){
+
+        this.vehicules.clear();
         this.vehicules.addAll(vehicules);
-        Log.i("DEV", vehicules.toString());
         notifyDataSetChanged();
+
     }
 
     @Override
     public VehiculeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.recycler_row, parent, false);
 
         return new VehiculeAdapter.ViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Vehicule vehicule = vehicules.get(position);
-        holder.tvVehicule.setText(vehicule.getMarque() + " " + vehicule.getModele() + " (" + vehicule.getImmatriculation() + ")");
+        holder.tvVehicule.setText(String.format("%s %s (%s)", vehicule.getMarque(), vehicule.getModele(), vehicule.getImmatriculation()));
 
     }
 
@@ -51,11 +54,11 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
         return vehicules.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvVehicule;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
 
             tvVehicule = itemView.findViewById(R.id.tv_vehicule);

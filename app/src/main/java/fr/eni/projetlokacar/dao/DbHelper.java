@@ -7,6 +7,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -14,6 +16,7 @@ import java.util.concurrent.Executors;
 import fr.eni.projetlokacar.activities.AccueilActivity;
 import fr.eni.projetlokacar.bo.Categorie;
 import fr.eni.projetlokacar.bo.Client;
+import fr.eni.projetlokacar.bo.Location;
 import fr.eni.projetlokacar.bo.Vehicule;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -79,9 +82,20 @@ public abstract class DbHelper {
                 new Vehicule("NZ-972-TV", "Pink", 91.32, "Bonneville", "Pontiac", 1)
         };
 
-        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getClientDao().insertAll(clients));
-        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getCategorieDAO().insertAll(categories));
+        Location[] locations = {
+                new Location(1, 1, new Date(), new Date(1539591293	)),
+                new Location(2, 2, new Date(), new Date(1539591293	))
+        };
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            DbHelper.getDataBase(context).getClientDao().insertAll(clients);
+            DbHelper.getDataBase(context).getCategorieDAO().insertAll(categories);
+            DbHelper.getDataBase(context).getVehiculeDAO().insertAll(vehicules);
+            DbHelper.getDataBase(context).getLocationDAO().insertAll(locations);
+        });
+       /* Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getCategorieDAO().insertAll(categories));
         Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getVehiculeDAO().insertAll(vehicules));
+        Executors.newSingleThreadExecutor().execute(() -> DbHelper.getDataBase(context).getLocationDAO().insertAll(locations));*/
 
 
     }

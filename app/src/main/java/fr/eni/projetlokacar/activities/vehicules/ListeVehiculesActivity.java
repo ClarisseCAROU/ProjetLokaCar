@@ -1,68 +1,89 @@
 package fr.eni.projetlokacar.activities.vehicules;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.BaseActivity;
+import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.adapters.VehiculeAdapter;
+import fr.eni.projetlokacar.bo.Vehicule;
 import fr.eni.projetlokacar.dao.DbHelper;
 import fr.eni.projetlokacar.dao.VehiculeReactiveDAO;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ListeVehiculesActivity extends BaseActivity implements SearchView.OnQueryTextListener{
+public class ListeVehiculesActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private VehiculeAdapter vehiculeAdapter;
     private CompositeDisposable subscriptions;
     private VehiculeReactiveDAO vehiculeDAO;
     private TextView tvFiltre;
+    private FloatingActionButton btnFiltre;
     private EditText recherche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_vehicules);
+
+        Single<List<Vehicule>> vehicules;
+
         subscriptions = new CompositeDisposable();
         vehiculeDAO = DbHelper.getDataBase(getApplication()).getVehiculeReactiveDAO();
         tvFiltre = findViewById(R.id.tv_filtre_vehicules);
+        btnFiltre = findViewById(R.id.btn_filtre_vehicules);
+        recherche = findViewById(R.id.recherche_vehicule);
+        recherche.setOnEditorActionListener((textView, actionId, event) -> rechercherVehicule(textView.getText().toString()));
 
+        int requestCode = getIntent().getIntExtra("requestCode", 0);
 
-        /*Spinner status = findViewById(R.id.sp_status);
-
-
-        ArrayAdapter<CharSequence> statutAdapter = ArrayAdapter.createFromResource(this,
-                R.array.status, android.R.layout.simple_spinner_item);
-        statutAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        status.setAdapter(statutAdapter);*/
-
+        switch (requestCode) {
+            case NouvelleLocationActivity.CHOIX_VEHICULE:
+                vehicules = vehiculeDAO.selectDsiponibles();
+                ((ViewGroup) btnFiltre.getParent()).removeView(btnFiltre);
+                ((ViewGroup) tvFiltre.getParent()).removeView(tvFiltre);
+                break;
+            default:
+                vehicules = vehiculeDAO.selectAll();
+                break;
+        }
 
         initRecyclerView();
 
         subscriptions.add(
-                vehiculeDAO.selectAll()
+                vehicules
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
-                        .subscribe(vehicules -> vehiculeAdapter.addVehicules(vehicules))
+                        .subscribe(v -> vehiculeAdapter.addVehicules(v))
         );
 
+    }
+
+    private boolean rechercherVehicule(String s) {
+
+        Log.d(TAG, s);
+
+        return true;
     }
 
     private void initRecyclerView() {
@@ -72,7 +93,10 @@ public class ListeVehiculesActivity extends BaseActivity implements SearchView.O
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         vehiculeAdapter = new VehiculeAdapter(
-                v -> Toast.makeText(this, v.getModele(), Toast.LENGTH_SHORT).show()
+                v -> {
+                    setResult(Activity.RESULT_OK, new Intent().putExtra("vehicule", v));
+                    finish();
+                }
         );
         recyclerView.setAdapter(vehiculeAdapter);
     }
@@ -81,20 +105,39 @@ public class ListeVehiculesActivity extends BaseActivity implements SearchView.O
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.filter_vehicules)
-                .setItems(R.array.status, (dialog, index) -> tvFiltre.setText(getResources().getStringArray(R.array.status)[index]));
+                .setItems(R.array.status, (dialog, index) -> filtrerVehicules(index));
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        Log.d(TAG, "onQueryTextSubmit: " + query);
+    private void filtrerVehicules(int index) {
 
-        return false;
+        String[] filtres = getResources().getStringArray(R.array.status);
+        String filtre = filtres[index];
+        Single<List<Vehicule>> vehicules;
+
+        switch (index) {
+            case 1:
+                vehicules = vehiculeDAO.selectDsiponibles();
+                break;
+            case 2:
+                vehicules = vehiculeDAO.selectNonDisponibles();
+                break;
+            default:
+                vehicules = vehiculeDAO.selectAll();
+                break;
+        }
+
+        tvFiltre.setText(filtre);
+        subscriptions.add(
+                vehicules
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        .subscribe(v -> vehiculeAdapter.addVehicules(v))
+        );
+
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
 }

@@ -6,27 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.vehicules.ListeVehiculesActivity"
-    android:padding="15dp">
+    android:padding="15dp"
+    >
 
     <LinearLayout
         android:id="@+id/filtres_vehicules"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginEnd="15dp">
+        android:layout_marginEnd="15dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/status"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:labelFor="@+id/sp_status"/>
-        <Spinner
-            android:id="@+id/sp_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Spinner>-->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/btn_filtre_vehicules"
             android:layout_width="wrap_content"
@@ -53,13 +44,15 @@
 
         <EditText
             android:id="@+id/recherche_vehicule"
+            android:imeOptions="actionSearch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:hint="@string/recherche"
             android:layout_gravity="right"
-            android:focusedByDefault="false"
-            />
+            android:inputType="textNoSuggestions"
+            android:lines="1"
+            android:maxLines="1"/>
 
     </LinearLayout>
 

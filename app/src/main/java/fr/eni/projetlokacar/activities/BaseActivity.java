@@ -1,8 +1,8 @@
 package fr.eni.projetlokacar.activities;
 
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,20 +10,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.idescout.sql.SqlScoutServer;
+
 import fr.eni.projetlokacar.R;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
+    public static final String TAG = "LokaCarApp";
+
+    private SqlScoutServer sqlScoutServer;
     private Toolbar toolbar;
     private int currentLayout;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_base);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        sqlScoutServer = SqlScoutServer.create(this, getPackageName());
     }
 
     @Override
@@ -33,7 +40,6 @@ public class BaseActivity extends AppCompatActivity {
         View wizardView = getLayoutInflater().inflate(layoutResID, content, false);
         content.addView(wizardView);
     }
-
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -55,21 +61,17 @@ public class BaseActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-}
-/*
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        switch (currentLayout) {
-            case R.layout.activity_accueil:
-                menu.findItem(R.id.accueil).setVisible(true);
-                break;
-            case R.layout.activity_statistiques:
-                menu.findItem(R.id.statistiques).setVisible(true);
-                break;
-        }
-        return true;
+    protected void onDestroy() {
+        super.onDestroy();
+        sqlScoutServer.destroy();
     }
-*/
 
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode) {
+        intent.putExtra("requestCode", requestCode);
+        super.startActivityForResult(intent, requestCode);
+    }
 
+}

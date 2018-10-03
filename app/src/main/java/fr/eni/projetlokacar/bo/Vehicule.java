@@ -7,13 +7,15 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
 import android.arch.persistence.room.TypeConverters;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.List;
 
 import fr.eni.projetlokacar.dao.converters.CategorieConverter;
 
 @Entity(tableName = "vehicules", indices = {@Index("immatriculation")})
-public class Vehicule {
+public class Vehicule implements Parcelable{
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -45,6 +47,42 @@ public class Vehicule {
         this.marque = marque;
         this.categorie = CategorieConverter.toCategorie(categorie);
     }
+
+    protected Vehicule(Parcel in) {
+        id = in.readInt();
+        immatriculation = in.readString();
+        couleur = in.readString();
+        tarifJournalier = in.readDouble();
+        modele = in.readString();
+        marque = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(immatriculation);
+        dest.writeString(couleur);
+        dest.writeDouble(tarifJournalier);
+        dest.writeString(modele);
+        dest.writeString(marque);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Vehicule> CREATOR = new Creator<Vehicule>() {
+        @Override
+        public Vehicule createFromParcel(Parcel in) {
+            return new Vehicule(in);
+        }
+
+        @Override
+        public Vehicule[] newArray(int size) {
+            return new Vehicule[size];
+        }
+    };
 
     public int getId() {
         return id;
