@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import fr.eni.projetlokacar.R;
 
-public class StatistiquesActivity extends AppCompatActivity {
+public class StatistiquesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

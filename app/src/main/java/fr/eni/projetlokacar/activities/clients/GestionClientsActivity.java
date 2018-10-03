@@ -19,12 +19,14 @@ import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.adapters.ClientAdapter;
 import fr.eni.projetlokacar.bll.ClientManager;
 import fr.eni.projetlokacar.bo.Client;
+import fr.eni.projetlokacar.activities.BaseActivity;
 
-public class GestionClientsActivity extends AppCompatActivity implements ClientAdapter.ClickClientListener {
+public class GestionClientsActivity extends BaseActivity implements ClientAdapter.ClickClientListener {
 
     RecyclerView rvClients;
     ClientAdapter clientAdapter;
     ClientReceiver clientReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

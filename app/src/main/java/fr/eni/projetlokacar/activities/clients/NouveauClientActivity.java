@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import fr.eni.projetlokacar.R;
+import fr.eni.projetlokacar.activities.BaseActivity;
 
-public class NouveauClientActivity extends AppCompatActivity {
+public class NouveauClientActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
