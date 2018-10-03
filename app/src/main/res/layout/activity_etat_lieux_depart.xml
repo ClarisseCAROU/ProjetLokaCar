@@ -27,10 +27,9 @@
         android:onClick="prendreDesPhotos"
         />
 
-    <SurfaceView
-        android:id="@+id/svCamera"
+    <GridView
+        android:id="@+id/gv_images"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/btnAjouterPhotos"/>
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

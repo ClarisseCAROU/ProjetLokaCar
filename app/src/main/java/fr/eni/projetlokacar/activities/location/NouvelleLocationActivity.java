@@ -1,48 +1,132 @@
 package fr.eni.projetlokacar.activities.location;
 
 import android.content.Intent;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.BaseActivity;
-import fr.eni.projetlokacar.activities.vehicules.ListeVehiculesActivity;
+import fr.eni.projetlokacar.adapters.VehiculeAdapter;
 import fr.eni.projetlokacar.bo.Client;
+import fr.eni.projetlokacar.bo.Location;
 import fr.eni.projetlokacar.bo.Vehicule;
+import fr.eni.projetlokacar.dao.ClientRxDAO;
 import fr.eni.projetlokacar.dao.DbHelper;
 import fr.eni.projetlokacar.dao.LocationDAO;
+import fr.eni.projetlokacar.dao.VehiculeRxDAO;
 import fr.eni.projetlokacar.fragments.DatePickerFragment;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
-public class NouvelleLocationActivity extends BaseActivity implements DatePickerFragment.DateSetListener {
+public class NouvelleLocationActivity extends BaseActivity {
 
     public static final int CHOIX_VEHICULE = 666;
 
     private LocationDAO locationDAO;
+    private VehiculeRxDAO vehiculeDAO;
+    private ClientRxDAO clientDAO;
+
     private Vehicule vehicule;
     private Client client;
 
-    private TextView dateDebut;
-    private TextView dateFin;
+    private RecyclerView recyclerView;
+    private VehiculeAdapter vehiculeAdapter;
+    private CompositeDisposable subscriptions;
+    private TextView tvPrix;
+    private TextView tvDateDebut;
+    private TextView tvDateFin;
+    private Date debut;
+    private Date fin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nouvelle_location);
 
+        subscriptions = new CompositeDisposable();
         locationDAO = DbHelper.getDataBase(getApplication()).getLocationDAO();
+        vehiculeDAO = DbHelper.getDataBase(getApplication()).getVehiculeRxDAO();
+        clientDAO = DbHelper.getDataBase(getApplication()).getClientRxDAO();
 
-        dateDebut = findViewById(R.id.date_debut);
-        dateFin = findViewById(R.id.date_fin);
-        dateDebut.setShowSoftInputOnFocus(false);
-        dateFin.setShowSoftInputOnFocus(false);
+        tvDateDebut = findViewById(R.id.date_debut);
+        tvDateDebut.setShowSoftInputOnFocus(false);
 
-        startActivityForResult(new Intent(this, ListeVehiculesActivity.class), CHOIX_VEHICULE);
+        tvDateFin = findViewById(R.id.date_fin);
+        tvDateFin.setShowSoftInputOnFocus(false);
+
+        tvPrix = findViewById(R.id.tv_prix);
+
+        initRecyclerView();
+
+        // On charge les vehicules en asynchrone
+        subscriptions.add(
+                vehiculeDAO.selectDsiponibles()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        // On les ajoute à l'adapter quand ils sont chargés
+                        .subscribe(v -> vehiculeAdapter.addVehicules(v))
+        );
+
+        subscriptions.add(
+                clientDAO.selectById(1)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        .subscribe(c -> client = c)
+        );
+
+        //startActivityForResult(new Intent(this, ListeVehiculesActivity.class), CHOIX_VEHICULE);
+    }
+
+    private void initRecyclerView() {
+
+        recyclerView = findViewById(R.id.rv_choix_vehicule);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        vehiculeAdapter = new VehiculeAdapter(v -> {
+            vehicule = v;
+            updatePrix();
+        });
+        recyclerView.setAdapter(vehiculeAdapter);
+    }
+
+    private void updatePrix() {
+
+        if (!tvDateDebut.getText().toString().isEmpty() && !tvDateFin.getText().toString().isEmpty() && vehicule != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            double prix = vehicule.getTarifJournalier();
+            long duree = 0;
+
+            try {
+                debut = simpleDateFormat.parse(tvDateDebut.getText().toString());
+                fin = simpleDateFormat.parse(tvDateFin.getText().toString());
+                long diffInMillies = Math.abs(fin.getTime() - debut.getTime());
+
+                duree = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                prix *= duree;
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            tvPrix.setText(String.format("%s €", String.valueOf(prix)));
+        } else {
+            tvPrix.setText("");
+        }
+
     }
 
     @Override
@@ -51,7 +135,6 @@ public class NouvelleLocationActivity extends BaseActivity implements DatePicker
         if (requestCode == CHOIX_VEHICULE) {
             if (resultCode == RESULT_OK) {
                 vehicule = data.getParcelableExtra("vehicule");
-                Log.d(TAG, "onActivityResult: " + vehicule.getModele());
             }
         }
 
@@ -60,13 +143,19 @@ public class NouvelleLocationActivity extends BaseActivity implements DatePicker
     public void showDatePickerDialog(View view) {
 
         DatePickerFragment newFragment = new DatePickerFragment();
-        newFragment.setListener((year, month, day) -> ((EditText)view).setText(day + "/" + month + "/" + year));
+        newFragment.setListener((year, month, day) -> {
+            ((EditText) view).setText(day + "/" + month + "/" + year);
+            updatePrix();
+        });
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
     }
 
-    @Override
-    public void onDateSet(int year, int month, int day) {
-        dateDebut.setText(day + "/" + month + "/" + year);
+    public void faireEtatDesLieux(View view) {
+
+        Location location = new Location(client.getId(), vehicule.getId(), debut, fin);
+
+        startActivity(new Intent(this, EtatLieuxDepartActivity.class)
+                .putExtra("location", location));
     }
 }

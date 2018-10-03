@@ -16,6 +16,7 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
 
     private List<Vehicule> vehicules;
     private ItemClickListener listener;
+    private View selectedItem;
 
     public VehiculeAdapter(ItemClickListener listener) {
         this.vehicules = new ArrayList<>();
@@ -45,7 +46,7 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         Vehicule vehicule = vehicules.get(position);
-        holder.tvVehicule.setText(String.format("%s %s (%s)", vehicule.getMarque(), vehicule.getModele(), vehicule.getImmatriculation()));
+        holder.tvVehicule.setText(String.format("%s %s (%s)", vehicule.getMarque(), vehicule.getModele(), vehicule.getTarifJournalier()));
 
     }
 
@@ -62,7 +63,21 @@ public class VehiculeAdapter extends RecyclerView.Adapter<VehiculeAdapter.ViewHo
             super(itemView);
 
             tvVehicule = itemView.findViewById(R.id.tv_vehicule);
-            itemView.setOnClickListener( e -> listener.onItemClick(vehicules.get(getAdapterPosition())));
+            itemView.setOnClickListener( e -> {
+                if(selectedItem != itemView){
+                    if(selectedItem != null){
+                        selectedItem.setSelected(false);
+                    }
+                    selectedItem = itemView;
+                    selectedItem.setSelected(true);
+                } else {
+                    selectedItem.setSelected(false);
+                    selectedItem = null;
+                }
+
+                //itemView.setSelected(!itemView.isSelected());
+                listener.onItemClick(vehicules.get(getAdapterPosition()));
+            });
 
         }
     }

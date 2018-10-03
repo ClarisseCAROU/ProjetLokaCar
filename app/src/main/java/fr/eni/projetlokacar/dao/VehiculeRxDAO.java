@@ -9,7 +9,7 @@ import fr.eni.projetlokacar.bo.Vehicule;
 import io.reactivex.Single;
 
 @Dao
-public interface VehiculeReactiveDAO {
+public interface VehiculeRxDAO {
 
     @Query("SELECT * FROM VEHICULES")
     Single<List<Vehicule>> selectAll();

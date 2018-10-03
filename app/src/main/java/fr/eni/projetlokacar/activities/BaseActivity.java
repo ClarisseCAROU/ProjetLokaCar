@@ -30,7 +30,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sqlScoutServer = SqlScoutServer.create(this, getPackageName());
+        if(sqlScoutServer == null){
+            sqlScoutServer = SqlScoutServer.create(this, getPackageName());
+        }
     }
 
     @Override

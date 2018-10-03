@@ -8,12 +8,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.adapters.VehiculeAdapter;
 import fr.eni.projetlokacar.bo.Vehicule;
 import fr.eni.projetlokacar.dao.DbHelper;
-import fr.eni.projetlokacar.dao.VehiculeReactiveDAO;
+import fr.eni.projetlokacar.dao.VehiculeRxDAO;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -34,7 +32,7 @@ public class ListeVehiculesActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private VehiculeAdapter vehiculeAdapter;
     private CompositeDisposable subscriptions;
-    private VehiculeReactiveDAO vehiculeDAO;
+    private VehiculeRxDAO vehiculeDAO;
     private TextView tvFiltre;
     private FloatingActionButton btnFiltre;
     private EditText recherche;
@@ -48,7 +46,7 @@ public class ListeVehiculesActivity extends BaseActivity {
         Single<List<Vehicule>> vehicules;
 
         subscriptions = new CompositeDisposable();
-        vehiculeDAO = DbHelper.getDataBase(getApplication()).getVehiculeReactiveDAO();
+        vehiculeDAO = DbHelper.getDataBase(getApplication()).getVehiculeRxDAO();
         tvFiltre = findViewById(R.id.tv_filtre_vehicules);
         btnFiltre = findViewById(R.id.btn_filtre_vehicules);
         recherche = findViewById(R.id.recherche_vehicule);
