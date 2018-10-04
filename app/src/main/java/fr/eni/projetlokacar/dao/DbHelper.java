@@ -83,15 +83,13 @@ public abstract class DbHelper {
         };
 
         Location[] locations = {
-                new Location(1, 1, new Date(), new Date(1539591293	)),
-                new Location(2, 2, new Date(), new Date(1539591293	)),
+                new Location(1, 1, new Date(), new Date(1539170962	)),
+                new Location(2, 2, new Date(), new Date(1539170962	)),
 //DG-596-AW
                 //DP-391-GH  1539170962
-                new Location(3, 3, new Date(), new Date(1539591293)),
-                new Location(5, 3, new Date(), new Date(1539591293), new Date(1539591293), "commentaire avant état des lieux"),
-                new Location(4, 4, new Date(), new Date(1539591293	)),
-
-                new Location(5, 3, new Date(), new Date(1539591293), null, "commentaire avant état des lieux"),
+                new Location(3, 3, new Date(), new Date(1539170962), null, "commentaire avant état des lieux"),
+                new Location(5, 3, new Date(), new Date(1539170962), new Date(1539170962), "commentaire avant état des lieux"),
+                new Location(4, 4, new Date(), new Date(1539170962	))
         };
 
         Executors.newSingleThreadExecutor().execute(() -> {

@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.BaseActivity;
@@ -17,7 +19,6 @@ import fr.eni.projetlokacar.dao.ClientRxDAO;
 import fr.eni.projetlokacar.dao.DbHelper;
 import fr.eni.projetlokacar.dao.LocationRxDAO;
 import fr.eni.projetlokacar.dao.VehiculeRxDAO;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -57,7 +58,7 @@ public class RetourLocationActivity extends BaseActivity {
         rechercherImmatriculation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                return rechercherLocation(v.getText().toString());
+                return rechercherLocation(v.getText().toString().toUpperCase());
             }
         });
 
@@ -76,6 +77,7 @@ public class RetourLocationActivity extends BaseActivity {
 
     private boolean rechercherLocation(String recherche) {
         Log.i(TAG, recherche);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         subscriptions.add(
                 locationDAO.selectByImmatriculation(recherche)
@@ -86,67 +88,64 @@ public class RetourLocationActivity extends BaseActivity {
                             location = l;
                             rechercherVehicule(l.getVehiculeId());
                             rechercherClient(l.getClientId());
+                            this.tvDateDebut.setText(simpleDateFormat.format(location.getDateDepart()));
+                            this.tvDateRetour.setText(simpleDateFormat.format(location.getDateRetour()));
+                            Log.i("test", location.getDateRetour().toString());
                         }));
+
         return true;
     }
 
     private boolean rechercherVehicule(int vehiculeId) {
         Log.i(TAG, "recherche véhicule");
 
-        subscriptions.add(vehiculeDAO.selectById(vehiculeId).
-                observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                // On applique une fonction
-                .subscribe(v -> vehicule = v));
-
-        //.subscribe(v -> rechercherVehicule(v.getVehiculeId())));
-
+        subscriptions.add(
+                vehiculeDAO.selectById(vehiculeId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        // On applique une fonction
+                        .subscribe(v -> {
+                            vehicule = v;
+                            this.tvModel.setText(vehicule.getModele());
+                            this.tvMarque.setText(vehicule.getMarque());
+                            this.tvImmatriculation.setText(vehicule.getImmatriculation());
+                            this.calculerPrix(v.getTarifJournalier(), location.getDateDepart(), location.getDateRetour());
+                        }));
         return true;
     }
 
     private boolean rechercherClient(int clientId) {
         Log.i(TAG, "recherche client");
-        subscriptions.add(clientDAO.selectById(clientId).
-                observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                // On applique une fonction
-                .subscribe(c -> {
-                    client = c;
-                    this.remplirTextView();
-                }));
-        //.subscribe(v -> rechercherVehicule(v.getVehiculeId())));
-
+        subscriptions.add(
+                clientDAO.selectById(clientId)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .unsubscribeOn(Schedulers.io())
+                        // On applique une fonction
+                        .subscribe(c -> {
+                            client = c;
+                            this.tvClient.setText(client.getPrenom() + " " + client.getNom());
+                        }));
         return true;
     }
 
-    private void remplirTextView() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//    private void remplirTextView() {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//
+//
+////        this.tvPrix.setText();
+//    }
 
-        this.tvClient.setText(client.getPrenom() + " " + client.getNom());
 
-        this.tvDateDebut.setText(simpleDateFormat.format(location.getDateDepart()));
-        this.tvDateRetour.setText(simpleDateFormat.format(location.getDateRetour()));
-        this.tvDateRetour.setText(simpleDateFormat.format(location.getDateRetour()));
+    private void calculerPrix(double prix, Date debut, Date retour) {
+        long duree;
 
-        this.tvModel.setText(vehicule.getModele());
-        this.tvMarque.setText(vehicule.getMarque());
-        this.tvImmatriculation.setText(vehicule.getImmatriculation());
-        this.tvImmatriculation.setText(vehicule.getImmatriculation());
-//        this.tvPrix.setText();
+        long diffInMillies = Math.abs(retour.getTime() - debut.getTime());
+        duree = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        prix *= duree;
+
+        this.tvPrix.setText(String.format("%s €", String.valueOf(prix)));
     }
-
-
-/*
-    private double calculerPrix() {
-        double prix = 0;
-
-
-
-        return prix;
-    }
-*/
-
 
 }

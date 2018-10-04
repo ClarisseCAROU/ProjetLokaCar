@@ -34,6 +34,8 @@
         android:layout_alignBaseline="@id/tvLabelClient"
         android:layout_toEndOf="@id/tvLabelClient"
         android:inputType="text"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
         />
 
     <TextView
@@ -44,7 +46,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/date_depart"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvDateDebut"
@@ -52,7 +55,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelDateDebut"
         android:layout_toEndOf="@id/tvLabelDateDebut"
-        android:inputType="date" />
+        android:inputType="date"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/tvLabelDateRetour"
@@ -62,7 +68,8 @@
         android:layout_marginTop="10dp"
         android:text="@string/date_retour"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvDateRetour"
@@ -70,7 +77,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelDateRetour"
         android:layout_toEndOf="@id/tvLabelDateRetour"
-        android:inputType="date" />
+        android:inputType="date"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/tvLabelModel"
@@ -88,7 +98,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelModel"
         android:layout_toEndOf="@id/tvLabelModel"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/tvLabelMarque"
@@ -98,7 +111,8 @@
         android:layout_marginTop="10dp"
         android:text="@string/marque"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvMarque"
@@ -106,7 +120,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelMarque"
         android:layout_toEndOf="@id/tvLabelMarque"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/tvLabelImmatriculation"
@@ -116,7 +133,8 @@
         android:layout_marginTop="10dp"
         android:text="@string/immatriculation"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvImmatriculation"
@@ -124,7 +142,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelImmatriculation"
         android:layout_toEndOf="@id/tvLabelImmatriculation"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <TextView
         android:id="@+id/tvLabelPrix"
@@ -134,7 +155,8 @@
         android:layout_marginTop="20dp"
         android:text="@string/prix"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tvPrix"
@@ -142,7 +164,10 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/tvLabelPrix"
         android:layout_toEndOf="@id/tvLabelPrix"
-        android:inputType="numberDecimal" />
+        android:inputType="numberDecimal"
+        android:textSize="18sp"
+        android:layout_marginLeft="20dp"
+        />
 
     <ImageButton
         android:id="@+id/btnSuivant"
@@ -150,6 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_arrow_forward_black_36dp"/>
+        android:src="@drawable/ic_arrow_forward_black_36dp"
+        />
 
 </RelativeLayout>
