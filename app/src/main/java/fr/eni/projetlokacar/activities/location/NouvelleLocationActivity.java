@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.BaseActivity;
+import fr.eni.projetlokacar.activities.clients.GestionClientsActivity;
 import fr.eni.projetlokacar.adapters.VehiculeAdapter;
 import fr.eni.projetlokacar.bo.Client;
 import fr.eni.projetlokacar.bo.Location;
@@ -31,7 +33,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NouvelleLocationActivity extends BaseActivity {
 
-    public static final int CHOIX_VEHICULE = 666;
+    public static final int CHOIX_VEHICULE = 1;
+    private static final int CHOIX_CLIENT = 2;
 
     private LocationDAO locationDAO;
     private VehiculeRxDAO vehiculeDAO;
@@ -79,15 +82,7 @@ public class NouvelleLocationActivity extends BaseActivity {
                         .subscribe(v -> vehiculeAdapter.addVehicules(v))
         );
 
-        subscriptions.add(
-                clientDAO.selectById(1)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .unsubscribeOn(Schedulers.io())
-                        .subscribe(c -> client = c)
-        );
-
-        //startActivityForResult(new Intent(this, ListeVehiculesActivity.class), CHOIX_VEHICULE);
+        startActivityForResult(new Intent(this, GestionClientsActivity.class), CHOIX_CLIENT);
     }
 
     private void initRecyclerView() {
@@ -100,6 +95,7 @@ public class NouvelleLocationActivity extends BaseActivity {
             vehicule = v;
             updatePrix();
         });
+
         recyclerView.setAdapter(vehiculeAdapter);
     }
 
@@ -117,7 +113,6 @@ public class NouvelleLocationActivity extends BaseActivity {
 
                 duree = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
                 prix *= duree;
-
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -132,10 +127,8 @@ public class NouvelleLocationActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode == CHOIX_VEHICULE) {
-            if (resultCode == RESULT_OK) {
-                vehicule = data.getParcelableExtra("vehicule");
-            }
+        if (requestCode == CHOIX_CLIENT && resultCode == RESULT_OK) {
+            client = data.getParcelableExtra("client");
         }
 
     }

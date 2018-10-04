@@ -17,6 +17,7 @@ import fr.eni.projetlokacar.activities.clients.GestionClientsActivity;
 import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.activities.location.RetourLocationActivity;
 import fr.eni.projetlokacar.activities.vehicules.GestionVehiculesActivity;
+import fr.eni.projetlokacar.activities.vehicules.ListeVehiculesActivity;
 import fr.eni.projetlokacar.bo.Client;
 import fr.eni.projetlokacar.dao.DbHelper;
 
@@ -46,7 +47,8 @@ public class AccueilActivity extends BaseActivity {
         switch (view.getId()){
 
             case R.id.btn_nouvelle_location :
-                intent = new Intent(this, NouvelleLocationActivity.class);
+                intent = new Intent(this, NouvelleLocationActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 break;
 
             case R.id.btn_retour_location :
@@ -54,7 +56,7 @@ public class AccueilActivity extends BaseActivity {
                 break;
 
             case R.id.btn_gestion_vehicules :
-                intent = new Intent(this, GestionVehiculesActivity.class);
+                intent = new Intent(this, ListeVehiculesActivity.class);
                 break;
 
             case R.id.btn_gestion_clients :

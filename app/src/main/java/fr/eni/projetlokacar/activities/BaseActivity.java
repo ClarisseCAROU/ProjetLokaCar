@@ -18,7 +18,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String TAG = "LokaCarApp";
 
-    private SqlScoutServer sqlScoutServer;
     private Toolbar toolbar;
     private int currentLayout;
 
@@ -30,9 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if(sqlScoutServer == null){
-            sqlScoutServer = SqlScoutServer.create(this, getPackageName());
-        }
     }
 
     @Override
@@ -62,12 +58,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        sqlScoutServer.destroy();
     }
 
     @Override

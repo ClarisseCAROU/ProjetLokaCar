@@ -1,5 +1,6 @@
 package fr.eni.projetlokacar.activities.clients;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,11 +52,13 @@ public class GestionClientsActivity extends BaseActivity implements ClientAdapte
 
     @Override
     public void onClickClient(Client client) {
-        Toast.makeText(this, client.toString(), Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, NouvelleLocationActivity.class);
+        setResult(Activity.RESULT_OK, new Intent().putExtra("client", client));
+        finish();
+
+        /*Intent intent = new Intent(this, NouvelleLocationActivity.class);
         intent.putExtra("clientSelectionne", client);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     public void creerClient(View view) {

@@ -63,6 +63,15 @@ public class Location implements Parcelable {
         commentaire = in.readString();
         clientId = in.readInt();
         vehiculeId = in.readInt();
+        dateDepart = new Date(in.readLong());
+        dateRetour = new Date(in.readLong());
+
+        if(in.readInt() == 1) {
+            dateCloture = new Date(in.readLong());
+        } else {
+            in.readLong(); // ignore stored value
+            dateCloture = null;
+        }
     }
 
     @Override
@@ -70,6 +79,12 @@ public class Location implements Parcelable {
         dest.writeString(commentaire);
         dest.writeInt(clientId);
         dest.writeInt(vehiculeId);
+        dest.writeLong(dateDepart.getTime());
+        dest.writeLong(dateRetour.getTime());
+
+        dest.writeInt(dateCloture != null ? 1 : 0);
+        dest.writeLong(dateCloture != null ? dateCloture.getTime() : 0);
+
     }
 
     @Override
@@ -140,7 +155,9 @@ public class Location implements Parcelable {
     @Override
     public String toString() {
         return "Location{" +
-                "dateDepart=" + dateDepart +
+                "clientId=" + clientId +
+                ", vehiculeId=" + vehiculeId +
+                ", dateDepart=" + dateDepart +
                 ", dateRetour=" + dateRetour +
                 ", dateCloture=" + dateCloture +
                 ", commentaire='" + commentaire + '\'' +
