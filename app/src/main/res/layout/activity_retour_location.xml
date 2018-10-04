@@ -1,9 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     tools:context=".activities.location.RetourLocationActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/etRechercheImmatriculation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:hint="@string/rechercher_par_immatriculation"
+        />
+
+    <TextView
+        android:id="@+id/tvLabelClient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/etRechercheImmatriculation"
+        android:layout_marginTop="20dp"
+        android:text="@string/client"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tvClient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelClient"
+        android:layout_toEndOf="@id/tvLabelClient"
+        android:inputType="text"
+        />
+
+    <TextView
+        android:id="@+id/tvLabelDateDebut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelClient"
+        android:layout_marginTop="20dp"
+        android:text="@string/date_depart"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDateDebut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelDateDebut"
+        android:layout_toEndOf="@id/tvLabelDateDebut"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/tvLabelDateRetour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelDateDebut"
+        android:layout_marginTop="10dp"
+        android:text="@string/date_retour"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvDateRetour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelDateRetour"
+        android:layout_toEndOf="@id/tvLabelDateRetour"
+        android:inputType="date" />
+
+    <TextView
+        android:id="@+id/tvLabelModel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelDateRetour"
+        android:layout_marginTop="20dp"
+        android:text="@string/modele"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvModel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelModel"
+        android:layout_toEndOf="@id/tvLabelModel"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tvLabelMarque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelModel"
+        android:layout_marginTop="10dp"
+        android:text="@string/marque"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvMarque"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelMarque"
+        android:layout_toEndOf="@id/tvLabelMarque"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tvLabelImmatriculation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelMarque"
+        android:layout_marginTop="10dp"
+        android:text="@string/immatriculation"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvImmatriculation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelImmatriculation"
+        android:layout_toEndOf="@id/tvLabelImmatriculation"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/tvLabelPrix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvLabelImmatriculation"
+        android:layout_marginTop="20dp"
+        android:text="@string/prix"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPrix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/tvLabelPrix"
+        android:layout_toEndOf="@id/tvLabelPrix"
+        android:inputType="numberDecimal" />
+
+    <ImageButton
+        android:id="@+id/btnSuivant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_arrow_forward_black_36dp"/>
+
+</RelativeLayout>

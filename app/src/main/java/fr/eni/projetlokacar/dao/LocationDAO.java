@@ -6,4 +6,5 @@ import fr.eni.projetlokacar.bo.Location;
 
 @Dao
 public interface LocationDAO extends BaseDAO<Location> {
+
 }

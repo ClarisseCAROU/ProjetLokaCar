@@ -50,6 +50,15 @@ public class Location implements Parcelable {
         this.dateRetour = dateRetour;
     }
 
+    public Location(int clientId, int vehiculeId, @NonNull Date dateDepart, @NonNull Date dateRetour, Date dateCloture, String commentaire) {
+        this.clientId = clientId;
+        this.vehiculeId = vehiculeId;
+        this.dateDepart = dateDepart;
+        this.dateRetour = dateRetour;
+        this.dateCloture = dateCloture;
+        this.commentaire = commentaire;
+    }
+
     protected Location(Parcel in) {
         commentaire = in.readString();
         clientId = in.readInt();

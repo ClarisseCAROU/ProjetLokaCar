@@ -19,4 +19,7 @@ public interface VehiculeRxDAO {
 
     @Query("SELECT * FROM VEHICULES WHERE id IN (SELECT vehiculeId FROM locations WHERE dateCloture IS NULL)")
     Single<List<Vehicule>> selectNonDisponibles();
+
+    @Query("SELECT * FROM VEHICULES WHERE id=:id")
+    Single<Vehicule> selectById(int id);
 }

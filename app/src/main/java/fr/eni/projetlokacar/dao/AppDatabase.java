@@ -18,5 +18,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract VehiculeRxDAO getVehiculeRxDAO();
     public abstract ClientRxDAO getClientRxDAO();
+    public abstract LocationRxDAO getLocationRxDAO();
 
 }
