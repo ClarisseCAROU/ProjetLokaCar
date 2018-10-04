@@ -17,6 +17,7 @@ import java.util.List;
 
 import fr.eni.projetlokacar.R;
 import fr.eni.projetlokacar.activities.BaseActivity;
+import fr.eni.projetlokacar.activities.clients.NouveauClientActivity;
 import fr.eni.projetlokacar.activities.location.NouvelleLocationActivity;
 import fr.eni.projetlokacar.adapters.VehiculeAdapter;
 import fr.eni.projetlokacar.bo.Vehicule;
@@ -137,5 +138,11 @@ public class ListeVehiculesActivity extends BaseActivity {
         );
 
     }
+
+    public void creerVehicule(View view) {
+        Intent intent = new Intent(this, NouveauVehiculeActivity.class);
+        startActivity(intent);
+    }
+
 
 }

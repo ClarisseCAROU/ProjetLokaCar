@@ -54,4 +54,15 @@
     <string name="immatriculation">Immatriculation :</string>
     <string name="app_label">@string/app_name</string>
     <string name="search_hint">Entrez un n° d\'immatriculation</string>
+
+    <string name="errorImmatriculation">L\'immatriculation est obligatoire</string>
+    <string name="errorMarque">La Marque est obligatoire</string>
+    <string name="errorModele">Le Modèle est obligatoire</string>
+    <string name="errorCategorie">La catégorie est obligatoire</string>
+    <string name="errorPrix">Le prix par jour est obligatoire</string>
+
+
+
+
+
 </resources>

@@ -30,6 +30,7 @@ public class Vehicule implements Parcelable{
     public Vehicule() {
     }
 
+
     public Vehicule(String immatriculation, String couleur, double tarifJournalier, String modele, String marque, Categorie categorie) {
         this.immatriculation = immatriculation;
         this.couleur = couleur;
@@ -92,7 +93,7 @@ public class Vehicule implements Parcelable{
         this.id = id;
     }
 
-    public String getImmatriculation() {
+    public String getImmatriculation(){
         return immatriculation;
     }
 
@@ -167,6 +168,16 @@ public class Vehicule implements Parcelable{
 
         public int getId(){
             return id;
+        }
+
+        public static String[] getValues() {
+            String[] categories = new String[Categorie.values().length];
+            int i = 0;
+
+            for (Categorie c: values())
+                categories[i++] = c.toString().toLowerCase();
+
+            return categories;
         }
     }
 }

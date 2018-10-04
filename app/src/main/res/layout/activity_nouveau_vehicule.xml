@@ -1,9 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.vehicules.NouveauVehiculeActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvImmatriculation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Immatriculation : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        />
+
+    <EditText
+        android:id="@+id/etImmatriculation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvImmatriculation"
+        android:layout_alignBaseline="@id/tvImmatriculation"
+        />
+
+    <TextView
+        android:id="@+id/tvMarque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvImmatriculation"
+        android:text="Marque : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etMarque"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvMarque"
+        android:layout_alignBaseline="@id/tvMarque"
+        />
+
+    <TextView
+        android:id="@+id/tvModele"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvMarque"
+        android:text="Modele : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etModele"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvModele"
+        android:layout_alignBaseline="@id/tvModele"
+        />
+
+
+
+<!--    <TextView
+        android:id="@+id/tvCarburant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvModele"
+        android:text="Carburant : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etCarburant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvCarburant"
+        android:layout_alignBaseline="@id/tvCarburant"
+        />-->
+
+    <TextView
+        android:id="@+id/tvCategorie"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvModele"
+        android:text="Catégorie : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etCategorie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvCategorie"
+        android:layout_alignBaseline="@id/tvCategorie"
+        android:onClick="onCategorieClick"
+        />
+
+
+    <TextView
+        android:id="@+id/tvCouleur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCategorie"
+        android:text="Couleur : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etCouleur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_toEndOf="@id/tvCouleur"
+        android:layout_alignBaseline="@id/tvCouleur"
+        />
+
+    <TextView
+        android:id="@+id/tvPrixParJour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvCouleur"
+        android:text="Prix par jour : "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etPrixParJour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:layout_toEndOf="@id/tvPrixParJour"
+        android:layout_alignBaseline="@id/tvPrixParJour"
+        />
+
+
+
+    <Button
+        android:id="@+id/btnValider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvPrixParJour"
+        android:text="Ajouter"
+        android:textSize="20sp"
+        android:layout_marginTop="50dp"
+        android:onClick="ajouterVehicule"
+        />
+
+</RelativeLayout>

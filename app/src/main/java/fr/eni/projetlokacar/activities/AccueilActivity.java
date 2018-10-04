@@ -55,7 +55,8 @@ public class AccueilActivity extends BaseActivity {
                 intent = new Intent(this, RetourLocationActivity.class);
                 break;
 
-            case R.id.btn_gestion_vehicules :
+
+            case R.id.btn_liste_vehicules :
                 intent = new Intent(this, ListeVehiculesActivity.class);
                 break;
 
