@@ -28,10 +28,14 @@ public class GestionClientsActivity extends BaseActivity implements ClientAdapte
     private ClientAdapter clientAdapter;
     private ClientReceiver clientReceiver;
 
+    private int requestCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_clients);
+
+        requestCode = getIntent().getIntExtra("requestCode", 0);
 
         rvClients = this.findViewById(R.id.rvListeClients);
         rvClients.setHasFixedSize(true);
@@ -53,12 +57,10 @@ public class GestionClientsActivity extends BaseActivity implements ClientAdapte
     @Override
     public void onClickClient(Client client) {
 
-        setResult(Activity.RESULT_OK, new Intent().putExtra("client", client));
-        finish();
-
-        /*Intent intent = new Intent(this, NouvelleLocationActivity.class);
-        intent.putExtra("clientSelectionne", client);
-        startActivity(intent);*/
+        if(requestCode == NouvelleLocationActivity.CHOIX_CLIENT) {
+            setResult(Activity.RESULT_OK, new Intent().putExtra("client", client));
+            finish();
+        }
     }
 
     public void creerClient(View view) {
@@ -78,5 +80,12 @@ public class GestionClientsActivity extends BaseActivity implements ClientAdapte
             clientAdapter.addListeClients(clients);
             clientAdapter.notifyDataSetChanged();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(clientReceiver);
     }
 }

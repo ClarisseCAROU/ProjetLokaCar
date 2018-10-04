@@ -1,16 +1,21 @@
 package fr.eni.projetlokacar.activities.location;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import fr.eni.projetlokacar.R;
+import fr.eni.projetlokacar.activities.AccueilActivity;
 import fr.eni.projetlokacar.activities.BaseActivity;
 import fr.eni.projetlokacar.bo.Client;
 import fr.eni.projetlokacar.bo.Location;
@@ -19,6 +24,7 @@ import fr.eni.projetlokacar.dao.ClientRxDAO;
 import fr.eni.projetlokacar.dao.DbHelper;
 import fr.eni.projetlokacar.dao.LocationRxDAO;
 import fr.eni.projetlokacar.dao.VehiculeRxDAO;
+import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -39,6 +45,7 @@ public class RetourLocationActivity extends BaseActivity {
     private TextView tvMarque;
     private TextView tvImmatriculation;
     private TextView tvPrix;
+    private ImageButton btnValider;
 
     private Location location;
     private Vehicule vehicule;
@@ -54,6 +61,8 @@ public class RetourLocationActivity extends BaseActivity {
         this.vehiculeDAO = DbHelper.getDataBase(this).getVehiculeRxDAO();
         this.clientDAO = DbHelper.getDataBase(this).getClientRxDAO();
         this.subscriptions = new CompositeDisposable();
+
+        btnValider = findViewById(R.id.btnSuivant);
 
         rechercherImmatriculation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -84,14 +93,18 @@ public class RetourLocationActivity extends BaseActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
-                        .subscribe(l -> {
-                            location = l;
-                            rechercherVehicule(l.getVehiculeId());
-                            rechercherClient(l.getClientId());
-                            this.tvDateDebut.setText(simpleDateFormat.format(location.getDateDepart()));
-                            this.tvDateRetour.setText(simpleDateFormat.format(location.getDateRetour()));
-                            Log.i("test", location.getDateRetour().toString());
-                        }));
+                        .subscribe(
+                                l -> {
+                                    location = l;
+                                    rechercherVehicule(l.getVehiculeId());
+                                    rechercherClient(l.getClientId());
+                                    this.tvDateDebut.setText(simpleDateFormat.format(location.getDateDepart()));
+                                    this.tvDateRetour.setText(simpleDateFormat.format(location.getDateRetour()));
+                                    Log.i("test", location.getDateRetour().toString());
+                                },
+                                e -> Toast.makeText(this, "Aucun résultat correspondant.", Toast.LENGTH_SHORT).show()
+                        )
+        );
 
         return true;
     }
@@ -130,14 +143,6 @@ public class RetourLocationActivity extends BaseActivity {
         return true;
     }
 
-//    private void remplirTextView() {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-//
-//
-////        this.tvPrix.setText();
-//    }
-
-
     private void calculerPrix(double prix, Date debut, Date retour) {
         long duree;
 
@@ -148,4 +153,26 @@ public class RetourLocationActivity extends BaseActivity {
         this.tvPrix.setText(String.format("%s €", String.valueOf(prix)));
     }
 
+    public void cloturerLoacation(View view) {
+
+        location.setDateCloture(location.getDateRetour());
+
+        subscriptions.add(
+                Completable.fromAction(() -> locationDAO.update(location))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.computation())
+                        .unsubscribeOn(Schedulers.computation())
+                        .subscribe(
+                                () -> {
+                                    Toast.makeText(this, "Location cloturée.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),AccueilActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    finish();
+                                },
+                                e -> Log.e(TAG, "cloturerLocation: " + e.getMessage(), e)
+                        )
+        );
+
+    }
 }

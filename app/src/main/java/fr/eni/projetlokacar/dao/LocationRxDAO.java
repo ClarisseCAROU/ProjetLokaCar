@@ -7,7 +7,7 @@ import fr.eni.projetlokacar.bo.Location;
 import io.reactivex.Single;
 
 @Dao
-public interface LocationRxDAO {
+public interface LocationRxDAO extends BaseDAO<Location> {
 
     @Query("SELECT l.clientId, l.vehiculeId, l.dateDepart, l.dateRetour " +
             "FROM LOCATIONS l JOIN VEHICULES v ON l.vehiculeId = v.id " +

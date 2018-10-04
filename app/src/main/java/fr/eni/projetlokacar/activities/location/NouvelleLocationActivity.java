@@ -34,7 +34,7 @@ import io.reactivex.schedulers.Schedulers;
 public class NouvelleLocationActivity extends BaseActivity {
 
     public static final int CHOIX_VEHICULE = 1;
-    private static final int CHOIX_CLIENT = 2;
+    public static final int CHOIX_CLIENT = 2;
 
     private LocationDAO locationDAO;
     private VehiculeRxDAO vehiculeDAO;
@@ -82,7 +82,8 @@ public class NouvelleLocationActivity extends BaseActivity {
                         .subscribe(v -> vehiculeAdapter.addVehicules(v))
         );
 
-        startActivityForResult(new Intent(this, GestionClientsActivity.class), CHOIX_CLIENT);
+        startActivityForResult(new Intent(this, GestionClientsActivity.class)
+                .putExtra("requestCode", CHOIX_CLIENT), CHOIX_CLIENT);
     }
 
     private void initRecyclerView() {
